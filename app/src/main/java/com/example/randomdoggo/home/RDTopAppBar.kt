@@ -18,10 +18,12 @@ import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.example.randomdoggo.R
 import com.example.randomdoggo.Route
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -36,9 +38,9 @@ fun RDTopAppBar(
     val shouldShowBack = currentDestination?.hasRoute(Route.Home::class) != true
 
     val title = when {
-        currentDestination?.hasRoute(Route.Home::class) == true -> "Random Doggo"
-        currentDestination?.hasRoute(Route.Recent::class) == true -> "My Recently Generated Dogs!"
-        currentDestination?.hasRoute(Route.Generate::class) == true -> "Generate Dogs!"
+        currentDestination?.hasRoute(Route.Home::class) == true -> stringResource(R.string.app_name)
+        currentDestination?.hasRoute(Route.Recent::class) == true -> stringResource(R.string.label_recently_generated)
+        currentDestination?.hasRoute(Route.Generate::class) == true -> stringResource(R.string.label_generate_dogs)
         else -> ""
     }
 

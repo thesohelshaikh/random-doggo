@@ -1,3 +1,11 @@
 <resources>
-    <string name="app_name">random-doggo</string>
+    <string name="app_name">Random Doggo</string>
+
+    <string name="label_recently_generated">My Recently Generated Dogs!</string>
+    <string name="label_generate_dogs">Generate Dogs!</string>
+
+    <string name="cd_image_of_a_dog">Image of a dog</string>
+
+    <string name="button_generate">Generate!</string>
+    <string name="button_clear_dogs">Clear Dogs</string>
 </resources>

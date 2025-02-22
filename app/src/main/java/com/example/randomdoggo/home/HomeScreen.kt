@@ -8,7 +8,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.randomdoggo.R
 import com.example.randomdoggo.ui.theme.RandomDoggoTheme
 
 @Composable
@@ -25,12 +27,12 @@ fun HomeScreen(
         Button(onClick = {
             onEvent(HomeNavEvent.NavigateToGenerate)
         }) {
-            Text("Generate Dogs!")
+            Text(stringResource(R.string.label_generate_dogs))
         }
         Button(onClick = {
             onEvent(HomeNavEvent.NavigateToGenerated)
         }) {
-            Text("My Recently Generated Dogs!")
+            Text(stringResource(R.string.label_recently_generated))
         }
     }
 }
