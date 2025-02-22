@@ -20,7 +20,7 @@ import com.example.randomdoggo.home.HomeNavEvent
 import com.example.randomdoggo.home.HomeScreen
 import com.example.randomdoggo.home.RDTopAppBar
 import com.example.randomdoggo.recent.RecentScreen
-import com.example.randomdoggo.ui.theme.RandomdoggoTheme
+import com.example.randomdoggo.ui.theme.RandomDoggoTheme
 
 class MainActivity : ComponentActivity() {
 
@@ -30,7 +30,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         setContent {
-            RandomdoggoTheme {
+            RandomDoggoTheme {
                 val navController = rememberNavController()
                 val scrollBehavior =
                     TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())

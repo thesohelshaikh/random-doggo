@@ -9,7 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.randomdoggo.ui.theme.RandomdoggoTheme
+import com.example.randomdoggo.ui.theme.RandomDoggoTheme
 
 @Composable
 fun HomeScreen(
@@ -38,7 +38,7 @@ fun HomeScreen(
 @Preview(showBackground = true)
 @Composable
 private fun PreviewHomeScreen() {
-    RandomdoggoTheme {
+    RandomDoggoTheme {
         HomeScreen(onEvent = {})
     }
 }

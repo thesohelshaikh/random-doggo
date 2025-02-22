@@ -30,7 +30,7 @@ import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import coil3.request.crossfade
 import com.example.randomdoggo.R
-import com.example.randomdoggo.ui.theme.RandomdoggoTheme
+import com.example.randomdoggo.ui.theme.RandomDoggoTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -94,7 +94,7 @@ data class CarouselItem(
 @Preview
 @Composable
 private fun PreviewRecent() {
-    RandomdoggoTheme {
+    RandomDoggoTheme {
         RecentScreen()
     }
 }

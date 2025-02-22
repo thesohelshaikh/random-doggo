@@ -6,6 +6,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -28,7 +31,7 @@ import coil3.compose.LocalAsyncImagePreviewHandler
 import coil3.request.ImageRequest
 import coil3.request.crossfade
 import com.example.randomdoggo.R
-import com.example.randomdoggo.ui.theme.RandomdoggoTheme
+import com.example.randomdoggo.ui.theme.RandomDoggoTheme
 
 @Composable
 fun GenerateDogsScreen(
@@ -74,7 +77,7 @@ private fun PreviewGenerateDogsScreen() {
     }
 
     CompositionLocalProvider(LocalAsyncImagePreviewHandler provides previewHandler) {
-        RandomdoggoTheme {
+        RandomDoggoTheme {
             GenerateDogsScreen()
         }
     }
