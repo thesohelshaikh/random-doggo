@@ -25,4 +25,12 @@ class RecentViewModel: ViewModel() {
             }
         }
     }
+
+    fun clearCache(context: Context) {
+        viewModelScope.launch {
+            val cache = LruImageCache(context)
+            cache.clearCache()
+            loadImages(context)
+        }
+    }
 }
