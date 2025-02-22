@@ -25,10 +25,8 @@ import coil3.annotation.ExperimentalCoilApi
 import coil3.compose.AsyncImage
 import coil3.compose.AsyncImagePreviewHandler
 import coil3.compose.LocalAsyncImagePreviewHandler
-import coil3.imageLoader
 import coil3.request.ImageRequest
 import coil3.request.crossfade
-import coil3.util.DebugLogger
 import com.example.randomdoggo.R
 import com.example.randomdoggo.ui.theme.RandomdoggoTheme
 
@@ -44,8 +42,6 @@ fun GenerateDogsScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
-        Text("Generate Dogs!")
-
         if (!state.imageUrl.isNullOrEmpty()) {
             AsyncImage(
                 modifier = Modifier

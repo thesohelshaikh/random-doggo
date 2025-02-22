@@ -49,9 +49,8 @@ fun RecentScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text("Recent")
-
         val carouselState = rememberCarouselState { state.images.size }
+
         HorizontalUncontainedCarousel(
             state = carouselState,
             modifier = Modifier

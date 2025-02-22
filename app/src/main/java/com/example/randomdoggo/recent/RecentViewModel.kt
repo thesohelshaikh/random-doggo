@@ -18,7 +18,7 @@ class RecentViewModel: ViewModel() {
                 val images = LruImageCache(context).getCachedUrls()
                 Timber.d("Images (${images.size}): $images")
 
-                uiState.value = uiState.value.copy(images = images.toList())
+                uiState.value = uiState.value.copy(images = images.toList().reversed())
 
             } catch (e: Exception) {
                 Timber.e(e)
