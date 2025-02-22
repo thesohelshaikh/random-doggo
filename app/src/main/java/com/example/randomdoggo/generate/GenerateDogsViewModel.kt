@@ -17,6 +17,8 @@ class GenerateDogsViewModel : ViewModel() {
            try {
                val image = NetworkClient.service.generateRandomImage()
                Timber.d("Image generated:" + image?.message)
+               Timber.d("Breed:" + image?.extractBreed(image.message!!))
+               Timber.d("Name:" + image?.extractName(image.message!!))
                uiState.update {
                    uiState.value.copy(imageUrl = image?.message)
                }
