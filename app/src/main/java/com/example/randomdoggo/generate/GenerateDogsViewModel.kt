@@ -14,7 +14,7 @@ class GenerateDogsViewModel : ViewModel() {
     var uiState = MutableStateFlow(GenerateScreenState(imageUrl = null))
         private set
 
-    fun generate(context: Context) {
+    private fun generate(context: Context) {
         viewModelScope.launch {
            try {
                val image = NetworkClient.service.generateRandomImage()
@@ -30,6 +30,14 @@ class GenerateDogsViewModel : ViewModel() {
            } catch (e: Exception) {
                Timber.e(e)
            }
+        }
+    }
+
+    fun onEvent(event: GenerateScreenEvent, context: Context) {
+        when(event) {
+            GenerateScreenEvent.GenerateImage -> {
+                generate(context)
+            }
         }
     }
 }

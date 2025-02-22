@@ -59,7 +59,7 @@ fun GenerateDogsScreen(
 
         val context = LocalContext.current
         Button(onClick = {
-            viewModel.generate(context)
+            viewModel.onEvent(GenerateScreenEvent.GenerateImage, context)
         }) {
             Text(stringResource(R.string.button_generate))
         }
