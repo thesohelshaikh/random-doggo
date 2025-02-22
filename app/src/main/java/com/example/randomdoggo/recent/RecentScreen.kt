@@ -52,6 +52,8 @@ fun RecentScreen(
     ) {
         val carouselState = rememberCarouselState { state.images.size }
 
+        Text("Recently Generated Dogs(${state.images.size})")
+
         HorizontalUncontainedCarousel(
             state = carouselState,
             modifier = Modifier
@@ -77,9 +79,12 @@ fun RecentScreen(
             )
         }
 
-        Button(onClick = {
-            viewModel.clearCache(context)
-        }) {
+        Button(
+            onClick = {
+                viewModel.onEvent(RecentScreenEvent.ClearDogs, context)
+            },
+            enabled = state.images.isNotEmpty() && !state.isClearing
+        ) {
             Text(stringResource(R.string.button_clear_dogs))
         }
     }
