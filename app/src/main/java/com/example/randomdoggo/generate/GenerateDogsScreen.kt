@@ -46,13 +46,8 @@ fun GenerateDogsScreen(
     ) {
         Text("Generate Dogs!")
 
-        val imageLoader = LocalContext.current.imageLoader.newBuilder()
-            .logger(DebugLogger())
-            .build()
-
         if (!state.imageUrl.isNullOrEmpty()) {
             AsyncImage(
-                imageLoader = imageLoader,
                 modifier = Modifier
                     .padding(16.dp)
                     .size(100.dp),
@@ -65,8 +60,9 @@ fun GenerateDogsScreen(
             )
         }
 
+        val context = LocalContext.current
         Button(onClick = {
-            viewModel.generate()
+            viewModel.generate(context)
         }) {
             Text("Generate!")
         }
