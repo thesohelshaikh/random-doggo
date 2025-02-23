@@ -17,18 +17,24 @@ class GenerateDogsViewModel : ViewModel() {
     private fun generate(context: Context) {
         viewModelScope.launch {
            try {
+               uiState.update {
+                   uiState.value.copy(isLoading = true, imageUrl = null)
+               }
                val image = NetworkClient.service.generateRandomImage()
                Timber.d("Image generated:" + image?.message)
                Timber.d("Breed:" + image?.extractBreed(image.message!!))
                Timber.d("Name:" + image?.extractName(image.message!!))
                uiState.update {
-                   uiState.value.copy(imageUrl = image?.message)
+                   uiState.value.copy(imageUrl = image?.message, isLoading = false)
                }
                if (image?.message != null) {
                    LruImageCache(context).putImageUrl(image.message)
                }
            } catch (e: Exception) {
                Timber.e(e)
+               uiState.update {
+                   uiState.value.copy(isError = true, isLoading = false)
+               }
            }
         }
     }

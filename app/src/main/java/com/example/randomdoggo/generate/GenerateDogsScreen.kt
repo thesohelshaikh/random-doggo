@@ -1,11 +1,15 @@
 package com.example.randomdoggo.generate
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -39,16 +43,27 @@ fun GenerateDogsScreen(
     val state by viewModel.uiState.collectAsStateWithLifecycle()
 
     Column(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier
+            .fillMaxSize()
+            .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
-        if (!state.imageUrl.isNullOrEmpty()) {
+        if (state.isError) {
+            Text(stringResource(R.string.label_error))
+        }
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier
+                .height(250.dp)
+                .fillMaxWidth()
+        ) {
+            if (state.isLoading) {
+                CircularProgressIndicator(strokeWidth = 4.dp)
+            }
             AsyncImage(
                 modifier = Modifier
-                    .padding(16.dp)
                     .size(250.dp),
-                placeholder = painterResource(R.drawable.ic_launcher_background),
                 model = ImageRequest.Builder(LocalContext.current)
                     .data(state.imageUrl)
                     .crossfade(true)
@@ -58,9 +73,11 @@ fun GenerateDogsScreen(
         }
 
         val context = LocalContext.current
-        Button(onClick = {
-            viewModel.onEvent(GenerateScreenEvent.GenerateImage, context)
-        }) {
+        Button(
+            enabled = !state.isLoading,
+            onClick = {
+                viewModel.onEvent(GenerateScreenEvent.GenerateImage, context)
+            }) {
             Text(stringResource(R.string.button_generate))
         }
     }

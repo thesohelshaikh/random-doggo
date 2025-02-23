@@ -8,4 +8,5 @@
 
     <string name="button_generate">Generate!</string>
     <string name="button_clear_dogs">Clear Dogs</string>
+    <string name="label_error">Failed to generate image</string>
 </resources>
