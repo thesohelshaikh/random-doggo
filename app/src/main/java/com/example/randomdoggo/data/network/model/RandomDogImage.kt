@@ -4,6 +4,9 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import java.util.Locale
 
+/**
+ * Network model for response from API
+ */
 @Serializable
 data class RandomDogImage(
     @SerialName("message")
@@ -30,7 +33,7 @@ data class RandomDogImage(
             } else null
         }
 
-        fun extractName(url: String): String? {
+        fun extractName(url: String): String {
             val fileName = url.substringAfterLast("/")
             return fileName.substringBeforeLast(".")
         }
