@@ -12,26 +12,30 @@ data class RandomDogImage(
     @SerialName("status")
     val status: String
 ) {
-    fun extractBreed(url: String): String? {
-        val parts = url.split("/")
-        return if (parts.size > 4) {
-            parts[4]
-                .split("-")
-                .joinToString(" ") { word ->
-                    word.replaceFirstChar {
-                        if (it.isLowerCase()) {
-                            it.titlecase(Locale.ROOT)
-                        } else {
-                            it.toString()
+    companion object {
+        fun extractBreed(url: String): String? {
+            val parts = url.split("/")
+            return if (parts.size > 4) {
+                parts[4]
+                    .split("-")
+                    .joinToString(" ") { word ->
+                        word.replaceFirstChar {
+                            if (it.isLowerCase()) {
+                                it.titlecase(Locale.ROOT)
+                            } else {
+                                it.toString()
+                            }
                         }
                     }
-                }
 
-        } else null
+            } else null
+        }
+
+        fun extractName(url: String): String? {
+            val fileName = url.substringAfterLast("/")
+            return fileName.substringBeforeLast(".")
+        }
     }
 
-    fun extractName(url: String): String? {
-        val fileName = url.substringAfterLast("/")
-        return fileName.substringBeforeLast(".")
-    }
+
 }

@@ -26,12 +26,21 @@ class GenerateDogsViewModel @Inject constructor(
                    uiState.value.copy(isLoading = true, imageUrl = null)
                }
                val image = service.generateRandomImage()
-               Timber.d("Image generated:" + image?.message)
-               Timber.d("Breed:" + image?.extractBreed(image.message!!))
-               Timber.d("Name:" + image?.extractName(image.message!!))
-               uiState.update {
-                   uiState.value.copy(imageUrl = image?.message, isLoading = false)
+               image?.message?.let { message ->
+                   val breed = RandomDogImage.extractBreed(message)
+                   uiState.update {
+                       uiState.value.copy(
+                           imageUrl = message,
+                           breed = breed,
+                           isLoading = false,
+                           isError = false,
+                       )
+                   }
+                   Timber.d("Image generated:$message")
+                   Timber.d("Breed:$breed")
+                   Timber.d("Name:" + RandomDogImage.extractName(message))
                }
+
                if (image?.message != null) {
                    cache.putImageUrl(image.message)
                }

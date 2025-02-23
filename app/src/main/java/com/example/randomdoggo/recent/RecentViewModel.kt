@@ -3,6 +3,7 @@ package com.example.randomdoggo.recent
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.randomdoggo.cache.LruImageCache
+import com.example.randomdoggo.generate.RandomDogImage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
@@ -13,7 +14,7 @@ import javax.inject.Inject
 @HiltViewModel
 class RecentViewModel @Inject constructor(
     private val cache: LruImageCache
-): ViewModel() {
+) : ViewModel() {
 
     val uiState = MutableStateFlow(RecentScreenState())
 
@@ -23,7 +24,14 @@ class RecentViewModel @Inject constructor(
                 val images = cache.getCachedUrls()
                 Timber.d("Images (${images.size}): $images")
 
-                uiState.value = uiState.value.copy(images = images.toList().reversed())
+                uiState.value = uiState.value.copy(
+                    images = images.map {
+                        CarouselItem(
+                            breed = RandomDogImage.extractBreed(it) ?: "",
+                            imageUrl = it
+                        )
+                    }.reversed()
+                )
 
             } catch (e: Exception) {
                 Timber.e(e)
