@@ -5,10 +5,11 @@ import androidx.lifecycle.viewModelScope
 import com.example.randomdoggo.data.local.LruImageCache
 import com.example.randomdoggo.data.network.model.RandomDogImage
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -16,28 +17,20 @@ class RecentViewModel @Inject constructor(
     private val cache: LruImageCache
 ) : ViewModel() {
 
-    val uiState = MutableStateFlow(RecentScreenState())
-
-    fun loadImages() {
-        viewModelScope.launch {
-            try {
-                val images = cache.getCachedUrls()
-                Timber.d("Images (${images.size}): $images")
-
-                uiState.value = uiState.value.copy(
-                    images = images.map {
-                        CarouselItem(
-                            breed = RandomDogImage.extractBreed(it) ?: "",
-                            imageUrl = it
-                        )
-                    }.reversed()
+    val uiState: StateFlow<RecentScreenState> = cache.getCachedUrls().map {
+        RecentScreenState(
+            images = it.map { url ->
+                CarouselItem(
+                    breed = RandomDogImage.extractBreed(url) ?: "",
+                    imageUrl = url
                 )
-
-            } catch (e: Exception) {
-                Timber.e(e)
             }
-        }
-    }
+        )
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5_000),
+        initialValue = RecentScreenState(),
+    )
 
     fun onEvent(event: RecentScreenEvent) {
         when (event) {
@@ -49,14 +42,7 @@ class RecentViewModel @Inject constructor(
 
     private fun clearCache() {
         viewModelScope.launch {
-            uiState.update {
-                uiState.value.copy(isClearing = true)
-            }
             cache.clearCache()
-            loadImages()
-            uiState.update {
-                uiState.value.copy(isClearing = false)
-            }
         }
     }
 }

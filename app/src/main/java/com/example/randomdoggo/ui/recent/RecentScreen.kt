@@ -19,7 +19,6 @@ import androidx.compose.material3.carousel.CarouselDefaults
 import androidx.compose.material3.carousel.HorizontalUncontainedCarousel
 import androidx.compose.material3.carousel.rememberCarouselState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -37,7 +36,6 @@ import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import coil3.request.crossfade
 import com.example.randomdoggo.R
-import com.example.randomdoggo.data.network.model.RandomDogImage
 import com.example.randomdoggo.ui.theme.RandomDoggoTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -46,9 +44,6 @@ fun RecentScreen(
     modifier: Modifier = Modifier,
     viewModel: RecentViewModel = hiltViewModel()
 ) {
-    LaunchedEffect(key1 = "key") {
-        viewModel.loadImages()
-    }
     val state by viewModel.uiState.collectAsStateWithLifecycle()
 
     Column(
@@ -62,39 +57,41 @@ fun RecentScreen(
 
         Text("Recently Generated Dogs(${state.images.size})")
 
-        HorizontalUncontainedCarousel(
-            state = carouselState,
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(500.dp),
-            itemSpacing = 8.dp,
-            contentPadding = PaddingValues(horizontal = 16.dp),
-            itemWidth = 250.dp,
-            flingBehavior = CarouselDefaults.multiBrowseFlingBehavior(carouselState)
-        ) { i ->
-            val item = state.images[i]
-            Box{
-                AsyncImage(
-                    modifier = Modifier
-                        .maskClip(MaterialTheme.shapes.extraLarge)
-                        .size(250.dp),
-                    placeholder = painterResource(R.drawable.ic_launcher_background),
-                    model = ImageRequest.Builder(LocalContext.current)
-                        .data(item.imageUrl)
-                        .crossfade(true)
-                        .build(),
-                    contentScale = ContentScale.Crop,
-                    contentDescription = stringResource(R.string.cd_image_of_a_dog),
-                )
-                Text(
-                    modifier = Modifier.padding(8.dp).fillMaxWidth().align(Alignment.BottomCenter),
-                    text = item.breed,
-                    textAlign = TextAlign.Center,
-                    style = MaterialTheme.typography.headlineMedium,
-                    maxLines = 1,
-                    color = MaterialTheme.colorScheme.onPrimary,
-                    overflow = TextOverflow.Ellipsis,
-                )
+        if (state.images.isNotEmpty()) {
+            HorizontalUncontainedCarousel(
+                state = carouselState,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(500.dp),
+                itemSpacing = 8.dp,
+                contentPadding = PaddingValues(horizontal = 16.dp),
+                itemWidth = 250.dp,
+                flingBehavior = CarouselDefaults.multiBrowseFlingBehavior(carouselState)
+            ) { i ->
+                val item = state.images[i]
+                Box{
+                    AsyncImage(
+                        modifier = Modifier
+                            .maskClip(MaterialTheme.shapes.extraLarge)
+                            .size(250.dp),
+                        placeholder = painterResource(R.drawable.ic_launcher_background),
+                        model = ImageRequest.Builder(LocalContext.current)
+                            .data(item.imageUrl)
+                            .crossfade(true)
+                            .build(),
+                        contentScale = ContentScale.Crop,
+                        contentDescription = stringResource(R.string.cd_image_of_a_dog),
+                    )
+                    Text(
+                        modifier = Modifier.padding(8.dp).fillMaxWidth().align(Alignment.BottomCenter),
+                        text = item.breed,
+                        textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.headlineMedium,
+                        maxLines = 1,
+                        color = MaterialTheme.colorScheme.onPrimary,
+                        overflow = TextOverflow.Ellipsis,
+                    )
+                }
             }
         }
 
@@ -102,7 +99,7 @@ fun RecentScreen(
             onClick = {
                 viewModel.onEvent(RecentScreenEvent.ClearDogs)
             },
-            enabled = state.images.isNotEmpty() && !state.isClearing
+            enabled = state.images.isNotEmpty()
         ) {
             Text(stringResource(R.string.button_clear_dogs))
         }

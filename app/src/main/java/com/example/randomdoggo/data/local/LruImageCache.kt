@@ -4,7 +4,9 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringSetPreferencesKey
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class LruImageCache @Inject constructor(
@@ -28,9 +30,10 @@ class LruImageCache @Inject constructor(
     /**
      * Get all image URLs from cache
      */
-    suspend fun getCachedUrls(): Set<String> {
-        val prefs = dataStore.data.first()
-        return prefs[imageKey] ?: emptySet()
+    fun getCachedUrls(): Flow<Set<String>> {
+        return dataStore.data.map {
+            it[imageKey] ?: emptySet()
+        }
     }
 
     /**
