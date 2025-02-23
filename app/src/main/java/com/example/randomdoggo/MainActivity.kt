@@ -21,7 +21,9 @@ import com.example.randomdoggo.home.HomeScreen
 import com.example.randomdoggo.home.RDTopAppBar
 import com.example.randomdoggo.recent.RecentScreen
 import com.example.randomdoggo.ui.theme.RandomDoggoTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     @OptIn(ExperimentalMaterial3Api::class)

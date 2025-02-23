@@ -1,22 +1,26 @@
 package com.example.randomdoggo.recent
 
-import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.randomdoggo.cache.LruImageCache
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import javax.inject.Inject
 
-class RecentViewModel: ViewModel() {
+@HiltViewModel
+class RecentViewModel @Inject constructor(
+    private val cache: LruImageCache
+): ViewModel() {
 
     val uiState = MutableStateFlow(RecentScreenState())
 
-    fun loadImages(context: Context) {
+    fun loadImages() {
         viewModelScope.launch {
             try {
-                val images = LruImageCache(context).getCachedUrls()
+                val images = cache.getCachedUrls()
                 Timber.d("Images (${images.size}): $images")
 
                 uiState.value = uiState.value.copy(images = images.toList().reversed())
@@ -27,22 +31,21 @@ class RecentViewModel: ViewModel() {
         }
     }
 
-    fun onEvent(event: RecentScreenEvent, context: Context) {
+    fun onEvent(event: RecentScreenEvent) {
         when (event) {
             is RecentScreenEvent.ClearDogs -> {
-                clearCache(context)
+                clearCache()
             }
         }
     }
 
-    private fun clearCache(context: Context) {
+    private fun clearCache() {
         viewModelScope.launch {
             uiState.update {
                 uiState.value.copy(isClearing = true)
             }
-            val cache = LruImageCache(context)
             cache.clearCache()
-            loadImages(context)
+            loadImages()
             uiState.update {
                 uiState.value.copy(isClearing = false)
             }

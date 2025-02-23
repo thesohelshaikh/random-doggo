@@ -31,16 +31,18 @@ object NetworkClient {
         setLevel(HttpLoggingInterceptor.Level.BODY)
     }
 
-    private val okHttpClient = OkHttpClient.Builder()
+    val okHttpClient = OkHttpClient.Builder()
         .addInterceptor(loggingInterceptor)
         .addInterceptor(networkInterceptor)
         .build()
 
 
-    val service = Retrofit.Builder()
-        .baseUrl(BASE_URL)
-        .client(okHttpClient)
-        .addConverterFactory(jsonConfig.asConverterFactory(contentType))
-        .build()
-        .create(RandomDoggoService::class.java)
+    fun createDoggoService(client: OkHttpClient): RandomDoggoService {
+        return Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .client(client)
+            .addConverterFactory(jsonConfig.asConverterFactory(contentType))
+            .build()
+            .create(RandomDoggoService::class.java)
+    }
 }

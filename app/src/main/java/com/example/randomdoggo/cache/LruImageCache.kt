@@ -1,15 +1,14 @@
 package com.example.randomdoggo.cache
 
-import android.content.Context
-import androidx.datastore.preferences.core.*
-import androidx.datastore.preferences.preferencesDataStore
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.stringSetPreferencesKey
 import kotlinx.coroutines.flow.first
+import javax.inject.Inject
 
-// Extension to create DataStore
-private val Context.dataStore by preferencesDataStore(name = "image_cache")
-
-class LruImageCache(
-    private val context: Context,
+class LruImageCache @Inject constructor(
+    private val dataStore: DataStore<Preferences>,
     private val cacheSize: Int = DEFAULT_CACHE_SIZE,
 ) {
     private val imageKey = stringSetPreferencesKey("cached_images")
@@ -18,7 +17,7 @@ class LruImageCache(
      * Put image URL into cache
      */
     suspend fun putImageUrl(url: String) {
-        context.dataStore.edit { prefs ->
+        dataStore.edit { prefs ->
             val urls = prefs[imageKey]?.toMutableSet() ?: mutableSetOf()
             if (urls.size >= cacheSize) urls.remove(urls.first()) // Remove oldest
             urls.add(url)
@@ -30,7 +29,7 @@ class LruImageCache(
      * Get all image URLs from cache
      */
     suspend fun getCachedUrls(): Set<String> {
-        val prefs = context.dataStore.data.first()
+        val prefs = dataStore.data.first()
         return prefs[imageKey] ?: emptySet()
     }
 
@@ -38,7 +37,7 @@ class LruImageCache(
      * Clear all image URLs from cache
      */
     suspend fun clearCache() {
-        context.dataStore.edit { prefs ->
+        dataStore.edit { prefs ->
             prefs[imageKey] = emptySet()
         }
     }
