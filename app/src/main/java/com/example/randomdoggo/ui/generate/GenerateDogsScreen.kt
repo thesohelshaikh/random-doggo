@@ -1,4 +1,4 @@
-package com.example.randomdoggo.generate
+package com.example.randomdoggo.ui.generate
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box

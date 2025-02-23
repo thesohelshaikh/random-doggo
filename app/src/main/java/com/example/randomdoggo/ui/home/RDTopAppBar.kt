@@ -1,4 +1,4 @@
-package com.example.randomdoggo.home
+package com.example.randomdoggo.ui.theme.home
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn

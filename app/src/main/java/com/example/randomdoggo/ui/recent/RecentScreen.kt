@@ -1,4 +1,4 @@
-package com.example.randomdoggo.recent
+package com.example.randomdoggo.ui.recent
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -37,7 +37,7 @@ import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import coil3.request.crossfade
 import com.example.randomdoggo.R
-import com.example.randomdoggo.generate.RandomDogImage
+import com.example.randomdoggo.data.network.model.RandomDogImage
 import com.example.randomdoggo.ui.theme.RandomDoggoTheme
 
 @OptIn(ExperimentalMaterial3Api::class)

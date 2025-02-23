@@ -1,4 +1,4 @@
-package com.example.randomdoggo.recent
+package com.example.randomdoggo.ui.recent
 
 data class RecentScreenState(
     val images: List<CarouselItem> = listOf(),

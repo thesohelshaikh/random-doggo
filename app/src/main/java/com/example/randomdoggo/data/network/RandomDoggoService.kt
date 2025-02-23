@@ -1,6 +1,6 @@
-package com.example.randomdoggo.network
+package com.example.randomdoggo.data.network
 
-import com.example.randomdoggo.generate.RandomDogImage
+import com.example.randomdoggo.data.network.model.RandomDogImage
 import retrofit2.http.GET
 
 interface RandomDoggoService {

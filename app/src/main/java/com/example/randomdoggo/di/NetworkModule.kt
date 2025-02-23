@@ -1,7 +1,7 @@
 package com.example.randomdoggo.di
 
-import com.example.randomdoggo.network.NetworkClient
-import com.example.randomdoggo.network.RandomDoggoService
+import com.example.randomdoggo.data.network.NetworkClient
+import com.example.randomdoggo.data.network.RandomDoggoService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

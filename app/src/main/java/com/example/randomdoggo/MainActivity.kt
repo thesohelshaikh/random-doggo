@@ -15,11 +15,11 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.randomdoggo.generate.GenerateDogsScreen
-import com.example.randomdoggo.home.HomeNavEvent
-import com.example.randomdoggo.home.HomeScreen
-import com.example.randomdoggo.home.RDTopAppBar
-import com.example.randomdoggo.recent.RecentScreen
+import com.example.randomdoggo.ui.generate.GenerateDogsScreen
+import com.example.randomdoggo.ui.theme.home.HomeNavEvent
+import com.example.randomdoggo.ui.theme.home.HomeScreen
+import com.example.randomdoggo.ui.theme.home.RDTopAppBar
+import com.example.randomdoggo.ui.recent.RecentScreen
 import com.example.randomdoggo.ui.theme.RandomDoggoTheme
 import dagger.hilt.android.AndroidEntryPoint
 

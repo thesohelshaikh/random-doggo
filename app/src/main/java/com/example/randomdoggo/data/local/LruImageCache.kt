@@ -1,4 +1,4 @@
-package com.example.randomdoggo.cache
+package com.example.randomdoggo.data.local
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences

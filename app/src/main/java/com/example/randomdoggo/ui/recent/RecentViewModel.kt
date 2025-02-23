@@ -1,9 +1,9 @@
-package com.example.randomdoggo.recent
+package com.example.randomdoggo.ui.recent
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.randomdoggo.cache.LruImageCache
-import com.example.randomdoggo.generate.RandomDogImage
+import com.example.randomdoggo.data.local.LruImageCache
+import com.example.randomdoggo.data.network.model.RandomDogImage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update

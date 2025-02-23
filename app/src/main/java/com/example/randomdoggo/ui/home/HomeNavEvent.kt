@@ -1,4 +1,4 @@
-package com.example.randomdoggo.home
+package com.example.randomdoggo.ui.theme.home
 
 sealed class HomeNavEvent {
     data object NavigateToGenerate: HomeNavEvent()

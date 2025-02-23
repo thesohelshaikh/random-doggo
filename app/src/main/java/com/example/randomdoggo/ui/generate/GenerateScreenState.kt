@@ -1,4 +1,4 @@
-package com.example.randomdoggo.generate
+package com.example.randomdoggo.ui.generate
 
 data class GenerateScreenState(
     val imageUrl: String? = null,
